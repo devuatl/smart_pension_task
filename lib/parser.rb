@@ -19,6 +19,6 @@ class Parser
   end
 
   def self.print_aggregated_paths(aggregated_paths)
-    aggregated_paths.each {|path, views| puts "#{path} #{views}"}
+    aggregated_paths.each {|path, views| puts "#{path} #{views} visits"}
   end
 end
