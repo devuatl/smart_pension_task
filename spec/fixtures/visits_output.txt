@@ -1,4 +1,2 @@
-/contact 2 visits
-/about/2 1 visits
-/home 1 visits
-/help_page/1 1 visits
+/contact 3 visits
+/help_page/1 2 visits
