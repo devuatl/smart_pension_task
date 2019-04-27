@@ -40,4 +40,73 @@ RSpec.describe Parser do
       it { expect(count_path_occurrences).to eq(result) }
     end
   end
+
+  context '.print_occurrences' do
+    subject(:print_occurrences) { described_class.print_occurrences(occurrences, aggregation_type) }
+
+    context 'when occurrences are empty' do
+      let(:occurrences) { [] }
+
+    end
+
+    context 'when occurrences are present' do
+      let(:occurrences) { [['/help_page/1', 2], ['/contact', 1]] }
+
+      context 'when aggregation type is visits' do
+        let(:aggregation_type) { :visits }
+        let(:result) do
+          "/help_page/1 2 visits\n" +
+              "/contact 1 visits\n"
+        end
+
+        it { expect { print_occurrences }.to output(result).to_stdout }
+      end
+
+      context 'when aggregation type is unique views' do
+        let(:aggregation_type) { :unique_views }
+        let(:result) do
+          "/help_page/1 2 unique views\n" +
+              "/contact 1 unique views\n"
+        end
+
+        it { expect { print_occurrences }.to output(result).to_stdout }
+      end
+    end
+  end
+
+  context '.paths_from_logs' do
+    subject(:paths_from_logs) { described_class.paths_from_logs(log_lines) }
+
+    context 'when log lines are empty' do
+      let(:log_lines) { [] }
+      let(:result) { [] }
+
+      it { expect(paths_from_logs).to eq(result) }
+    end
+
+    context 'when log lines are present' do
+      let(:log_lines) { ['/help_page/1 126.318.035.038', '/contact 184.123.665.067'] }
+      let(:result) { ['/help_page/1', '/contact'] }
+
+      it { expect(paths_from_logs).to eq(result) }
+    end
+  end
+
+  context '.sort_descending_by_value' do
+    subject(:sort_descending_by_value) { described_class.sort_descending_by_value(occurrences) }
+
+    context 'when occurrences are empty' do
+      let(:occurrences) { {} }
+      let(:result) { [] }
+
+      it { expect(sort_descending_by_value).to eq(result) }
+    end
+
+    context 'when occurrences are present' do
+      let(:occurrences) { {'/help_page/1' => 2, '/contact' => 1} }
+      let(:result) { [['/help_page/1', 2], ['/contact', 1]] }
+
+      it { expect(sort_descending_by_value).to eq(result) }
+    end
+  end
 end
