@@ -1,0 +1,19 @@
+require: rubocop-rspec
+
+AllCops:
+  TargetRubyVersion: 2.6
+  Exclude:
+    - bin/**/*
+
+Metrics/LineLength:
+  Max: 120
+  Enabled: true
+
+Metrics/BlockLength:
+  ExcludedMethods: ['describe', 'xdescribe', 'context', 'xcontext', 'guard']
+
+RSpec/MultipleExpectations:
+  Max: 5
+
+RSpec/NestedGroups:
+  Max: 5
